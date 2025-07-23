@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Degree Selection Form</title>
+<style>
+  /* Basic styling for presentation */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  fieldset {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    width: fit-content; /* Adjusts width to content */
+  }
+  legend {
+    font-weight: bold;
+    padding: 0 5px;
+  }
+  input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  label {
+    margin-right: 15px; /* Space between checkbox options */
+  }
+  input[type="submit"] {
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<form>
+  <fieldset>
+    <legend>Degree</legend>
+    <input type="checkbox" id="ssc" name="degree_ssc" value="SSC">
+    <label for="ssc">SSC</label>
+
+    <input type="checkbox" id="hsc" name="degree_hsc" value="HSC">
+    <label for="hsc">HSC</label>
+
+    <input type="checkbox" id="bsc" name="degree_bsc" value="BSc">
+    <label for="bsc">BSc</label>
+  </fieldset>
+
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

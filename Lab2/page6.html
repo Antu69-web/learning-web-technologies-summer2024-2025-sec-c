@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blood Group Selection</title>
+<style>
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  label {
+    font-size: 1.2em; 
+    margin-right: 10px;
+  }
+  select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 20px; 
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  input[type="submit"] {
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<form>
+  <label for="bloodGroup">Blood Group</label>
+  <select id="bloodGroup" name="blood_group">
+    <option value="A_plus" selected>A+</option>
+    <option value="A_minus">A-</option>
+    <option value="B_plus">B+</option>
+    <option value="B_minus">B-</option>
+    <option value="AB_plus">AB+</option>
+    <option value="AB_minus">AB-</option>
+    <option value="O_plus">O+</option>
+    <option value="O_minus">O-</option>
+  </select>
+
+  <hr> <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
