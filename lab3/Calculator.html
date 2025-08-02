@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+    <div id="myDIV">
+
+    <input type="text" id="display" readonly>
+
+  </div>
+
+</body>
+</html>
+
+<script>
+
+    let display = document.getElementById("display");
+    let value ="";
+
+    document.body.appendChild(document.createElement("br"))
+    
+    const btn15 = document.createElement("button");
+    btn15.innerHTML = "AC"; 
+    btn15.addEventListener("click", function(){
+    addToDisplay('AC');    
+    });
+    document.body.appendChild(btn15);
+
+    const btn16 = document.createElement("button");
+    btn16.innerHTML = "+/-"; 
+    btn16.addEventListener("click", function(){
+    addToDisplay('+/-');    
+    });
+    document.body.appendChild(btn16);
+
+
+    const btn17 = document.createElement("button");
+    btn17.innerHTML = "%"; 
+    btn17.addEventListener("click", function(){
+    addToDisplay('%');    
+    });
+    document.body.appendChild(btn17);
+
+    const btn18 = document.createElement("button");
+    btn18.innerHTML = "/"; 
+    btn18.addEventListener("click", function(){
+    addToDisplay('');    
+    });
+    document.body.appendChild(btn18);
+
+    document.body.appendChild(document.createElement("br"))
+
+    const btn = document.createElement("button");
+    btn.innerHTML = "7"; 
+    btn.addEventListener("click", function(){
+    addToDisplay('7');    
+    });
+    document.body.appendChild(btn);
+
+    const btn1 = document.createElement("button");
+    btn1.innerHTML = "8"; 
+    btn1.addEventListener("click", function(){
+    addToDisplay('8');    
+    });
+    document.body.appendChild(btn1);
+
+
+    const btn2= document.createElement("button");
+    btn2.innerHTML = "9"; 
+    btn2.addEventListener("click", function(){
+    addToDisplay('9');    
+    });
+    document.body.appendChild(btn2);
+
+    const btn3 = document.createElement("button");
+    btn3.innerHTML = "*"; 
+    btn3.addEventListener("click", function(){
+    addToDisplay('*');    
+    });
+    document.body.appendChild(btn3);
+
+    document.body.appendChild(document.createElement("br"))
+
+    const btn4 = document.createElement("button");
+    btn4.innerHTML = "4"; 
+    btn4.addEventListener("click", function(){
+    addToDisplay('4');    
+    });
+    document.body.appendChild(btn4);
+
+    const btn5 = document.createElement("button");
+    btn5.innerHTML = "5"; 
+    btn15.addEventListener("click", function(){
+    addToDisplay('5');    
+    });
+    document.body.appendChild(btn5);
+
+    const btn6 = document.createElement("button");
+    btn6.innerHTML = "6"; 
+    btn6.addEventListener("click", function(){
+    addToDisplay('6');    
+    });
+    document.body.appendChild(btn6);
+
+    const btn7 = document.createElement("button");
+    btn7.innerHTML = "-"; 
+    btn7.addEventListener("click", function(){
+    addToDisplay('-');    
+    });
+    document.body.appendChild(btn7);
+
+    document.body.appendChild(document.createElement("br"))
+
+    const btn8 = document.createElement("button");
+    btn8.innerHTML = "1"; 
+    btn8.addEventListener("click", function(){
+    addToDisplay('1');    
+    });
+    document.body.appendChild(btn8);
+
+    const btn9 = document.createElement("button");
+    btn9.innerHTML = "2"; 
+    btn9.addEventListener("click", function(){
+    addToDisplay('*');    
+    });
+    document.body.appendChild(btn9);
+
+    const btn10 = document.createElement("button");
+    btn10.innerHTML = "3"; 
+    btn10.addEventListener("click", function(){
+    addToDisplay('3');    
+    });
+    document.body.appendChild(btn10);
+
+    const btn11 = document.createElement("button");
+    btn11.innerHTML = "+"; 
+    btn11.addEventListener("click", function(){
+    addToDisplay('+');    
+    });
+    document.body.appendChild(btn11);
+
+
+    document.body.appendChild(document.createElement("br"))
+
+
+    const btn12 = document.createElement("button");
+    btn12.innerHTML = "0"; 
+    btn12.addEventListener("click", function(){
+    addToDisplay('0');    
+    });
+    document.body.appendChild(btn12);
+
+    const btn13 = document.createElement("button");
+    btn13.innerHTML = "."; 
+    btn13.addEventListener("click", function(){
+    addToDisplay('.');    
+    });
+    document.body.appendChild(btn13);
+
+    const btn14 = document.createElement("button");
+    btn14.innerHTML = "="; 
+    btn14.addEventListener("click", function(){
+    addToDisplay('=');    
+    });
+    document.body.appendChild(btn14);
+
+    const allButtons = document.querySelectorAll("button");
+
+  function addToDisplay(val){
+  if(val=="="){
+    display.value = eval(value);
+    value = display.value;
+  } else if(val=="AC"){
+    value="";
+    display.value="";
+  } else {
+    value += val;
+    display.value = value;
+  }
+}
+    allButtons.forEach(btn => {
+        btn.style.width = "50px";
+        btn.style.height = "50px";
+        btn.style.margin = "5px";
+        btn.style.borderRadius = "40%"; 
+        btn.style.fontSize = "16px";
+        btn.style.cursor = "pointer";
+    });
+
+</script>
