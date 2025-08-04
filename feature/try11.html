@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Demo – Finance Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin:0; font-family:sans-serif; background:#f6f8fd; }
+    header { background:#045fa8; color:white; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;}
+    .logo {font-size:1.5em; font-weight:700;}
+    nav {display:flex; gap:22px;}
+    nav a {color:white; text-decoration:none; font-weight:500; padding:7px 14px; border-radius:5px;}
+    nav a:hover, nav a.active {background:#3076bb;}
+    .hamburger { display:none; flex-direction:column; gap:5px; width:32px; height:28px; cursor:pointer;}
+    .hamburger span {display:block; height:5px; background:white; border-radius:3px;}
+    @media (max-width:640px){
+      nav {display:none;flex-direction:column;width:100%; gap:0;}
+      nav.active {display:flex;}
+      .hamburger {display:flex;}
+      header{flex-direction:column; align-items:flex-start;}
+    }
+    .container { max-width:380px; margin:36px auto; background:white; box-shadow:0 3px 12px #e4eafd; border-radius:11px; padding:28px 16px;}
+    h2 {color:#045fa8; margin-bottom:20px;}
+    label {font-weight:600;}
+    input {width:100%;font-size:16px;padding:8px 7px; margin-top:3px; border-radius:4px; border:1px solid #bcd2ea;}
+    .form-group { margin-bottom:15px;}
+    .error { color:#d01313; font-size:14px; margin:2px 0;}
+    button { background:#045fa8;color:white;border:none;border-radius:4px;padding:11px 28px; font-size:15.5px;}
+    button:hover {background:#258635;}
+    .success {color:#118744; margin-top:9px;}
+    @media (max-width:420px){ .container{padding:10px 2px;} button{width:100%;} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Finance Tracker</div>
+    <nav id="mainNav">
+      <a href="#" class="active">Home</a>
+      <a href="#">Features</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="hamburger" id="hamburgerBtn" aria-label="Open Menu" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+  <div class="container">
+    <h2>Demo Form</h2>
+    <form id="demoForm" autocomplete="off" novalidate>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input id="username" type="text" required>
+        <div class="error" id="userError"></div>
+      </div>
+      <div class="form-group">
+        <label for="useremail">Email:</label>
+        <input id="useremail" type="email" required>
+        <div class="error" id="emailError"></div>
+      </div>
+      <button type="submit">Submit</button>
+      <div class="success" id="formSuccess"></div>
+    </form>
+  </div>
+  <script>
+    // Hamburger menu toggle for mobile
+    const hamburger = document.getElementById('hamburgerBtn');
+    const nav = document.getElementById('mainNav');
+    hamburger.onclick = function(){
+      nav.classList.toggle('active');
+    };
+    hamburger.onkeypress = function(e){
+      if(e.key === "Enter" || e.key === " ") nav.classList.toggle('active');
+    };
+    // Form validation
+    document.getElementById('demoForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      let valid = true;
+      document.getElementById('userError').textContent = "";
+      document.getElementById('emailError').textContent = "";
+      document.getElementById('formSuccess').textContent = "";
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('useremail').value.trim();
+      if (!username) {
+        document.getElementById('userError').textContent = "Username is required."; valid = false;
+      } else if(username.length<2){
+        document.getElementById('userError').textContent = "Username must be at least 2 characters."; valid = false;
+      }
+      if (!email) {
+        document.getElementById('emailError').textContent = "Email is required."; valid = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').textContent = "Invalid email address."; valid = false;
+      }
+      if(valid){
+        document.getElementById('formSuccess').textContent = "Form submitted successfully!";
+        this.reset();
+      }
+    });
+  </script>
+</body>
+</html>

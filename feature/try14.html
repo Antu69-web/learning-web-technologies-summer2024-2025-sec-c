@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Activity Logs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafbfc;
+      margin: 0;
+      padding: 24px;
+    }
+    .logs-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      border: 1px solid #888;
+      border-radius: 8px;
+      padding: 24px;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-bar label {
+      font-size: 0.98em;
+      margin-right: 5px;
+    }
+    .filter-bar input, .filter-bar select {
+      padding: 5px 8px;
+      border-radius: 4px;
+      border: 1px solid #bbb;
+    }
+    .filter-bar button {
+      padding: 7px 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      background: #3264fe;
+      color: #fff;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: background 0.15s;
+    }
+    .filter-bar button:hover {
+      background: #2448aa;
+    }
+    .error-message {
+      color: #e84258;
+      font-size: 0.97em;
+      margin-top: -8px;
+      margin-bottom: 8px;
+      min-height: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 10px 10px;
+      border-bottom: 1px solid #eaeaea;
+      text-align: left;
+      font-size: 1em;
+    }
+    th {
+      background: #f1f3f8;
+      font-weight: bold;
+    }
+    .export-btn {
+      margin-top: 12px;
+      background: #30b63e;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      float: right;
+      transition: background 0.15s;
+    }
+    .export-btn:hover {
+      background: #218a2c;
+    }
+  </style>
+</head>
+<body>
+  <div class="logs-container">
+    <h2>Activity Logs</h2>
+    <form id="filterForm" class="filter-bar" autocomplete="off">
+      <div>
+        <label for="startDate">Start Date</label>
+        <input type="date" id="startDate" name="startDate">
+      </div>
+      <div>
+        <label for="endDate">End Date</label>
+        <input type="date" id="endDate" name="endDate">
+      </div>
+      <div>
+        <label for="user">User</label>
+        <input type="text" id="user" name="user" placeholder="Any">
+      </div>
+      <div>
+        <label for="actionType">Action</label>
+        <select id="actionType" name="actionType">
+          <option value="">Any</option>
+          <option value="login">Login</option>
+          <option value="update">Update</option>
+          <option value="export">Export</option>
+          <option value="delete">Delete</option>
+        </select>
+      </div>
+      <button type="submit">Filter</button>
+    </form>
+    <div class="error-message" id="filterError"></div>
+    <table id="logsTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>User</th>
+          <th>Action</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Logs will be inserted here -->
+      </tbody>
+    </table>
+    <button class="export-btn" onclick="exportCSV()">Export Logs (CSV)</button>
+  </div>
+  <script>
+    // Sample log data:
+    const logs = [
+      { date: '2025-08-01', user: 'alice', action: 'login', details: 'Success' },
+      { date: '2025-08-02', user: 'bob', action: 'update', details: 'Updated profile' },
+      { date: '2025-08-03', user: 'charlie', action: 'delete', details: 'Deleted file' },
+      { date: '2025-08-03', user: 'alice', action: 'export', details: 'Exported report' },
+      { date: '2025-08-04', user: 'bob', action: 'login', details: 'Success' },
+      { date: '2025-08-04', user: 'alice', action: 'update', details: 'Changed password' },
+      { date: '2025-08-04', user: 'david', action: 'export', details: 'Exported logs' },
+    ];
+
+    // Render logs to table
+    function renderLogs(logRows) {
+      const tbody = document.querySelector('#logsTable tbody');
+      tbody.innerHTML = '';
+      if (logRows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No results.</td></tr>';
+        return;
+      }
+      for (const log of logRows) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${log.date}</td><td>${log.user}</td>
+                        <td>${capitalize(log.action)}</td><td>${log.details}</td>`;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // Capitalize first letter
+    function capitalize(s) {
+      return s[0].toUpperCase() + s.slice(1);
+    }
+
+    // Filtering
+    function filterLogs(e) {
+      e.preventDefault();
+      document.getElementById('filterError').textContent = '';
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      const user = document.getElementById('user').value.trim().toLowerCase();
+      const actionType = document.getElementById('actionType').value;
+
+      // Validate dates
+      if (startDate && endDate && startDate > endDate) {
+        document.getElementById('filterError').textContent = "Start Date cannot be after End Date.";
+        return;
+      }
+
+      let filtered = logs.filter(l => {
+        if (startDate && l.date < startDate) return false;
+        if (endDate && l.date > endDate) return false;
+        if (user && !l.user.toLowerCase().includes(user)) return false;
+        if (actionType && l.action !== actionType) return false;
+        return true;
+      });
+
+      renderLogs(filtered);
+    }
+
+    document.getElementById('filterForm').addEventListener('submit', filterLogs);
+
+    // Export visible logs as CSV
+    function exportCSV() {
+      const rows = Array.from(document.querySelectorAll('#logsTable tbody tr'));
+      if (!rows.length || rows[0].children[0].textContent === 'No results.') {
+        alert("No logs to export!");
+        return;
+      }
+      let csv = "Date,User,Action,Details\n";
+      for (const row of rows) {
+        const cols = Array.from(row.children).map(td => `"${td.textContent.replace(/"/g, '""')}"`);
+        csv += cols.join(',') + "\n";
+      }
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'activity_logs.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Initial render
+    renderLogs(logs);
+  </script>
+</body>
+</html>
